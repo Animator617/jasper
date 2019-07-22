@@ -258,15 +258,3 @@ int TestFolderCreation(string folder, const char *folderP, const char *path) {
 
     return 0;
 }
-
-
-
-#include <Python.h>
-
-// now including the other files
-#include <iostream>
-
-int main() {
-    
-    return 0;
-}
