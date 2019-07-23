@@ -32,11 +32,28 @@ start_text = "-------------------------------------------------------\n" \
              " The Artificial Inteligenz  " + "v" + __version__ + "\n" \
              "-------------------------------------------------------\n" \
              "By Animator617 (c) \n"
+'''
+help_text = "---------------------------------\n" \
+            "this is the help text for Jasper\n" \
+            "\n" \
+            "the prefix : j!\n" \
+            "\n" \
+            "Testing Comands:\n" \
+            "->hello = returns 'say hello'\n" \
+            "->who are you = retuns some information about jasper\n" \
+            "->by = returns 'say by'\n" \
+            "->help || help me ||  help me = returns this \n"
+
+cry_content = ":cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: :cry: "
+'''
+
+## now the code of the bot
 
 @client.event
 async def on_message(message):
     if message.content.startswith('j!'):
-        if message.content == 'j!hello':
+        # hello
+        if message.content == 'j!hello' or message.content == 'j! hello':
             channel = message.channel
             await channel.send('Say hello!')
             print('**hello**')
@@ -46,7 +63,8 @@ async def on_message(message):
             msg = await client.wait_for('message', check=check)
             await channel.send('Hello {.author}!'.format(msg))
 
-        elif message.content == 'j!by':
+        # by
+        elif message.content == 'j!by' or message.content == 'j! by':
             channel = message.channel
             await channel.send('Say by!')
             print('**by**')
@@ -57,7 +75,8 @@ async def on_message(message):
             msg = await client.wait_for('message', check=check)
             await channel.send('By {.author}!'.format(msg))
 
-        elif message.content == 'j!who are you':
+        # who are you
+        elif message.content == 'j!who are you' or message.content == 'j! who are you':
             channel = message.channel
             await channel.send(jasper_logo1)
             await channel.send(jasper_logo2)
@@ -75,8 +94,12 @@ async def on_message(message):
 
             msg = await client.wait_for('message', check=check)
             await channel.send('who are you {.author}!'.format(msg))
-        elif message.content == 'j!cry':
-            await channel.send(cry_content)
+
+        # cry    
+        elif message.content == 'j!cry' or message.content == 'j! cry':
+            channel = message.channel
+            #await channel.send(cry_content)
+            await channel.send(cry.cry_content)
             print('** cry **')
             def check(m):
                 return m.content == 'cry' and m.channel == channel
@@ -84,7 +107,10 @@ async def on_message(message):
             msg = await client.wait_for('message', check=check)
             await channel.send('cry {.author}!'.format(msg))
 
-        elif message.content == 'j!help' or message.content == 'j1 help' or message.content == 'j!help me' or message.content == 'j! help me':
+        # help
+        elif message.content == 'j!help' or message.content == 'j! help' or message.content == 'j!help me' or message.content == 'j! help me':
+            channel = message.channel
+            #await channel.send(help.help_text)
             await channel.send(help.help_text)
             print('** help **')
             def check(m):
@@ -92,7 +118,14 @@ async def on_message(message):
 
             msg = await client.wait_for('message', check=check)
             await channel.send('help {.author}!'.format(msg))
-        
+
+        # play ( player )
+        elif message.content == 'j!play' or message.content == 'j! play':
+            channel = message.channel
+            print('** play **')
+            p = player()
+
+            p.run()
             
 
 '''
@@ -116,4 +149,5 @@ async def on_ready():
     print(client.user.id)
     print('------')
 
+client.run(TOKEN)
 client.run(TOKEN)
