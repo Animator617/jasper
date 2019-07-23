@@ -1,0 +1,1 @@
+share\idlelib\idle.bat

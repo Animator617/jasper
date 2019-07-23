@@ -1,0 +1,3 @@
+M:
+
+python\Scripts\activate
