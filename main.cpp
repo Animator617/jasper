@@ -191,7 +191,7 @@ int main() {
     // python testing 
     //jpytest(1, "hallo");
     //jpytest();
-    jpytest();
+    jpytest(); // PROBLEM : (.text+0x364): relocation truncated to fit: R_X86_64_PC32 against undefined symbol `jpytest'
     
     // END TESTING SPACE //
     cout << "\n Hey I'm Jasper" << endl;
