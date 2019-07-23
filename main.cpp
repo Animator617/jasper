@@ -15,11 +15,25 @@
  * Created on 10. Juli 2019, 13:57
  */
 
-// INCLUDE LIBS.
-// to include python
-#define PY_SSIZE_T_CLEAN
-#include "python/python/Include/Python.h"  // to use the virtusal python envirunment
 
+// PYTHON INCL //
+#define PY_SSIZE_T_CLEAN
+#include <windows.h>
+
+/*
+// if __CYGWIN__ is defined i need to undefine it 
+#ifdef __CYGWIN__
+#undef __CYGWIN__
+#endif
+*/
+
+#ifdef WIN_32
+#   include "python/python_WIN32/Include/Python.h"
+#else
+#   include "python/python/Include/Python.h"
+#endif
+
+// INCLUDE LIBS.
 #include <iostream>
 #include <string>
 #include <math.h>
@@ -28,7 +42,6 @@
 #include <sstream>
 //#include <Python.h>
 //#include <cstdlib>
-
 
 using namespace std;
 
@@ -42,7 +55,7 @@ using namespace std;
 //#include "file_system/FileManager/FileManager.hpp"
 
 // for testing //
-
+#include "python/test/test_run.h"
 
 // NEEDED CLASSES
 
@@ -133,6 +146,9 @@ int main() {
     //system("batch/FirstBatch_test/test.bat");
     system("batch/StartUpBatch/MainStartBatch.bat");
     
+    // than start the virtual python envirunment
+    system("batch/StartUpBatch/PythonStartBatch.bat");
+    
     // remineder 
     
     cout << "reminder in main.cpp" << endl;
@@ -172,7 +188,10 @@ int main() {
     //utils::mkdir("\testing\temp");
     
     
-    
+    // python testing 
+    //jpytest(1, "hallo");
+    //jpytest();
+    jpytest();
     
     // END TESTING SPACE //
     cout << "\n Hey I'm Jasper" << endl;
@@ -207,8 +226,13 @@ int main() {
         cout << "Good by. I'll hope we can talk again. \n"
              << "** Jasper **" << endl;
     }
+    
+    // now shuting down the python envirument
+    system("batch/EndBatch/PythonEndBatch.bat");
+    
     return 0;
 }
+
 
 
 // this funtion create an new folder in the with string folder defind folder 
