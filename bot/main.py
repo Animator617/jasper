@@ -7,7 +7,7 @@ from commands import cry
 #import bot_comands
 from bot_comands.say_hello import JS_bot_sayHello
 
-TOKEN = 'NjAwNzY0NjIwNjEyOTYwMzE2.XTOKlA.W9EJvAW3QJKoyscuTWfA_OAzV80'
+TOKEN = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
 #commands.Bot(command_prefix=",j")
 
 client = discord.Client()
