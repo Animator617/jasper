@@ -25,9 +25,13 @@ export LIB_PREFIX LIB_POSTFIX
 all: obj link
 
 obj:
-	@$(MAKE) -f $(TOP_DIR)/dir1/dir1.mk
-	@$(MAKE) -f $(TOP_DIR)/dir2/dir2.mk
-	@$(MAKE) -f $(TOP_DIR)/dir3/dir3.mk
+	@$(MAKE) -f $(TOP_DIR)/brain/brain.mk
+	@$(MAKE) -f $(TOP_DIR)/bot/bot.mk
+	@$(MAKE) -f $(TOP_DIR)/python/python.mk
+	@$(MAKE) -f $(TOP_DIR)/python_scripts/python_scripts.mk
+	@$(MAKE) -f $(TOP_DIR)/protocol/protocol.mk
+	@$(MAKE) -f $(TOP_DIR)/main/main.mk
+	@$(MAKE) -f $(TOP_DIR)/src/src.mk
 
 # link workaround
 # pass link to rules.mk to trigger link
@@ -37,13 +41,21 @@ link:
 # check
 # to display each module build info
 check:
-	@$(MAKE) -f $(TOP_DIR)/dir1/dir1.mk check
-	@$(MAKE) -f $(TOP_DIR)/dir2/dir2.mk check
-	@$(MAKE) -f $(TOP_DIR)/dir3/dir3.mk check
-
+	@$(MAKE) -f $(TOP_DIR)/brain/brain.mk check
+	@$(MAKE) -f $(TOP_DIR)/bot/bot.mk check
+	@$(MAKE) -f $(TOP_DIR)/python/python.mk check
+	@$(MAKE) -f $(TOP_DIR)/python_scripts/python_scripts.mk check
+	@$(MAKE) -f $(TOP_DIR)/protocol/protocol.mk check
+	@$(MAKE) -f $(TOP_DIR)/main/main.mk check
+	@$(MAKE) -f $(TOP_DIR)/src/src.mk check
+	
 # remove ouyput
 clean:
-	@$(MAKE) -f $(TOP_DIR)/dir1/dir1.mk clean
-	@$(MAKE) -f $(TOP_DIR)/dir2/dir2.mk clean
-	@$(MAKE) -f $(TOP_DIR)/dir3/dir3.mk clean
+	@$(MAKE) -f $(TOP_DIR)/brain/brain.mk clean
+	@$(MAKE) -f $(TOP_DIR)/bot/bot.mk clean
+	@$(MAKE) -f $(TOP_DIR)/python/python.mk clean
+	@$(MAKE) -f $(TOP_DIR)/python_scripts/python_scripts.mk clean
+	@$(MAKE) -f $(TOP_DIR)/protocol/protocol.mk clean
+	@$(MAKE) -f $(TOP_DIR)/main/main.mk clean
+	@$(MAKE) -f $(TOP_DIR)/src/src.mk clean
 	-rm -rf $(OUTPUT_DIR)
