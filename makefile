@@ -32,6 +32,8 @@ obj:
 	@$(MAKE) -f $(TOP_DIR)/protocol/protocol.mk
 	@$(MAKE) -f $(TOP_DIR)/main/main.mk
 	@$(MAKE) -f $(TOP_DIR)/src/src.mk
+	@$(MAKE) -f $(TOP_DIR)/main.mk
+	
 
 # link workaround
 # pass link to rules.mk to trigger link
@@ -48,6 +50,7 @@ check:
 	@$(MAKE) -f $(TOP_DIR)/protocol/protocol.mk check
 	@$(MAKE) -f $(TOP_DIR)/main/main.mk check
 	@$(MAKE) -f $(TOP_DIR)/src/src.mk check
+	@$(MAKE) -f $(TOP_DIR)/main.mk check
 	
 # remove ouyput
 clean:
@@ -58,4 +61,5 @@ clean:
 	@$(MAKE) -f $(TOP_DIR)/protocol/protocol.mk clean
 	@$(MAKE) -f $(TOP_DIR)/main/main.mk clean
 	@$(MAKE) -f $(TOP_DIR)/src/src.mk clean
+	@$(MAKE) -f $(TOP_DIR)/main.mk clean
 	-rm -rf $(OUTPUT_DIR)
