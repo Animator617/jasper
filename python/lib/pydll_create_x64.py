@@ -38,7 +38,7 @@ def build_libpython(ver, nm=NM, dlltool=DLLTOOL,
 #For example:
 
 import os
-for n in (27, 33, 35):
+for n in (27, 33, 35, 37):
     pylib = 'python%s.lib' % n
     if os.path.exists(pylib):
         build_libpython(n)
