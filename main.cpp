@@ -60,7 +60,7 @@ using namespace std;
 // NEEDED CLASSES
 
 /*
- *
+ * Following comes the main part
  */
 /*
  * The new idea is that when im using the idea i used before io would need 
