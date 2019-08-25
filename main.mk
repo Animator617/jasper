@@ -42,3 +42,5 @@ vpath %.c $(SRC_PATH)
 # use general compiler and compile rules
 include $(MKFILE_DIR)/gcc.mk
 include $(MKFILE_DIR)/rules.mk
+
+# that's the end of this file
