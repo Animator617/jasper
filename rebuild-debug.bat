@@ -1,4 +1,5 @@
 PROCESSOR_ARCHITECTURE
+
 @echo off
 
 set "language=de"
