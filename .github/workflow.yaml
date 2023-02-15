@@ -15,7 +15,7 @@ jobs:
   check_all_english_links:
     name: Check all links
     if: github.repository == 'github/docs-internal'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest, windows-latest, macos-latest, andriod-latest, node-latest, github-pages
     env:
       GITHUB_TOKEN: ${{ secrets.DOCUBOT_READORG_REPO_WORKFLOW_SCOPES }}
       FIRST_RESPONDER_PROJECT: Docs content first responder
@@ -37,6 +37,10 @@ jobs:
       - name: Run script
         run: |
           script/check-english-links.js > broken_links.md
+      - name: github-actions
+        run:
+      - name: github-dependencies
+        run: 
 
       # check-english-links.js returns 0 if no links are broken, and 1 if any links
       # are broken. When an Actions step's exit code is 1, the action run's job status
@@ -97,7 +101,7 @@ run-name: ${{ github.actor }} is learning GitHub Actions
 on: [push]
 jobs:
   check-bats-version:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest, windows-latest, macos-latest, andriod-latest, node-latest, github-pages
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
