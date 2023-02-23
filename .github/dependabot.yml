@@ -6,9 +6,9 @@
     # A token with 'repo' and 'workflow' privileges
     token: 
     # The name of your default branch, usually 'main' or 'master'
-    baseBranchName: # optional
+    baseBranchName: # Main   
     # The name to give the branch containing your batched dependencies
-    batchBranchName: # optional
+    batchBranchName: # Master
     # The title to give the PR containing your batched dependencies
     batchPullTitle: # optional 
     
