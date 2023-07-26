@@ -1,0 +1,359 @@
+# Sample workflow for building and deploying a Jekyll site to GitHub Pages
+name: Deploy Jekyll with GitHub Pages dependencies preinstalled
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["master"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+
+  # Deployment job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
+        
+      - name: Cache
+        uses: actions/cache@v3.2.5
+        with:
+          # A list of files, directories, and wildcard patterns to cache and restore
+          path: 
+          # An explicit key for restoring and saving the cache
+          key: 
+          # An ordered list of keys to use for restoring stale cache if no cache hit occurred for key. Note `cache-hit` returns false in this case.
+          restore-keys: # optional
+          # The chunk size used to split up large files during upload, in bytes
+          upload-chunk-size: # optional
+          # An optional boolean when enabled, allows windows runners to save or restore caches that can be restored or saved respectively on other platforms
+          enableCrossOsArchive: # optional, default is false
+          # Fail the workflow if cache entry is not found
+          fail-on-cache-miss: # optional, default is false
+          
+          - name: Upload a Build Artifact
+  uses: actions/upload-artifact@v3.1.2
+  with:
+    # Artifact name
+    name: # optional, default is artifact
+    # A file, directory or wildcard pattern that describes what to upload
+    path: 
+    # The desired behavior if no files are found using the provided path.
+Available Options:
+  warn: Output a warning but do not fail the action
+  error: Fail the action with an error message
+  ignore: Do not output any warnings or errors, the action does not fail
+
+    if-no-files-found: # optional, default is warn
+    # Duration after which artifact will expire in days. 0 means using default retention.
+Minimum 1 day. Maximum 90 days unless changed from the repository settings page.
+
+    retention-days: # optional
+    
+    - name: First interaction
+  uses: actions/first-interaction@v1.1.1
+  with:
+    # Token for the repository. Can be passed in using {{ secrets.GITHUB_TOKEN }}
+    repo-token: 
+    # Comment to post on an individual's first issue
+    issue-message: # optional
+    # Comment to post on an individual's first pull request
+    pr-message: # optional
+    
+    - name: Setup Go environment
+  uses: actions/setup-go@v3.5.0
+  with:
+    # The Go version to download (if necessary) and use. Supports semver spec and ranges.
+    go-version: # optional
+    # Path to the go.mod or go.work file.
+    go-version-file: # optional
+    # Set this option to true if you want the action to always check for the latest available version that satisfies the version spec
+    check-latest: # optional
+    # Used to pull node distributions from go-versions. Since there's a default, this is typically not supplied by the user. When running this action on github.com, the default value is sufficient. When running on GHES, you can pass a personal access token for github.com if you are experiencing rate limiting.
+    token: # optional, default is ${{ github.server_url == 'https://github.com' && github.token || '' }}
+    # Used to specify whether caching is needed. Set to true, if you'd like to enable caching.
+    cache: # optional
+    # Used to specify the path to a dependency file - go.sum
+    cache-dependency-path: # optional
+    # Target architecture for Go to use. Examples: x86, x64. Will use system architecture by default.
+    architecture: # optional
+
+
+- name: GitIgnore Parser
+  # You may pin to the exact commit or the version.
+  # uses: dkershner6/gitignore-parser@6a5fba55e4a7eaafe547c7697a5147e98d6df33e
+  uses: dkershner6/gitignore-parser@v1
+  with:
+    # The location of the .gitignore file from the repo root, with no filename.
+    path: # optional, default is ./
+    # Comma-delimited string of files and paths the gitignore must deny being committed
+    must_deny: # optional, default is 
+    # Comma-delimited string of files and paths the gitignore must accept being committed
+    must_accept: # optional, default is 
+    # true/false to indicate whether the workflow should fail if a string in must_deny is not found
+    fail_on_error: # optional, default is true
+    
+    - name: YARRRML Parser
+  # You may pin to the exact commit or the version.
+  # uses: vemonet/yarrrml-parser@2639e5eab999fea176512072c80f73f89d123c05
+  uses: vemonet/yarrrml-parser@v1.1
+  with:
+    # Input YARRRML file to convert to RML
+    input: # default is input.yarrr.yml
+    # Path to output file
+    output: # default is output.rml.ttl
+    # RML or R2RML (default: RML)
+    format: # optional, default is RML
+    
+    - name: Parse Sitemap
+  # You may pin to the exact commit or the version.
+  # uses: cobraz/parse-sitemap@a7b032ce3bacda78d0e8ff99679da2499da70d62
+  uses: cobraz/parse-sitemap@v1.0.1
+  with:
+    # E.g. https://bjerk.io/sitemap.xml
+    sitemap-url: 
+    
+    - name: Parse Properties
+  # You may pin to the exact commit or the version.
+  # uses: amadornes/parse-properties-action@5eb4f19e207423c833bdd5d0f753528da3b2f537
+  uses: amadornes/parse-properties-action@v1.0
+  with:
+    # The path to the file to be read
+    file: 
+    
+    - name: Issue Parser
+  # You may pin to the exact commit or the version.
+  # uses: codetheweb/gh-action-issue-parser@668339ef290637c5c3ae53394cbc23657bb59829
+  uses: codetheweb/gh-action-issue-parser@v1
+  with:
+    # issue body
+    body: 
+    
+    
+    - name: Setup Auto
+  # You may pin to the exact commit or the version.
+  # uses: auto-it/setup-auto@c9043896567e442476e5b8168d1caca08593869d
+  uses: auto-it/setup-auto@v1.0.0
+  with:
+    # Version of Auto to install (latest by default)
+    version: # optional
+    # Git user name to set for Auto
+    git-username: # optional, default is github-actions[bot]
+    # Git email to set for Auto
+    git-email: # optional, default is 41898282+github-actions[bot]@users.noreply.github.com
+    # GH_TOKEN for Auto
+    gh-token: # optional, default is ${{ github.token }}
+    
+    - name: github-action-auto-format
+  # You may pin to the exact commit or the version.
+  # uses: cloudposse/github-action-auto-format@970af4c15a720047204400fe5b5ae52fb2991e9b
+  uses: cloudposse/github-action-auto-format@v0.12.0
+  with:
+    # The path on the github-runner where the auto-format action scripts are checked out at runtime
+    actions-files-checkout-path: # optional, default is github-action-auto-format
+    # GitHub username for writing new commits
+    bot-name: # optional, default is cloudpossebot
+    # Email address associated with the GitHub user for writing new commits
+    bot-email: # optional
+    # Name of formatting task to execute. (Options include: readme, github, terraform, and context.)
+    format-task: 
+    # GitHub Token for use in `github_format.sh` and PR creation steps. This token must be granted `workflows` permissions.
+    workflow-token: 
+    
+    - name: Automatic Contrib PRs
+  uses: github/automatic-contrib-prs@v1.0.0
+  
+  - name: Auto-Formatter
+  # You may pin to the exact commit or the version.
+  # uses: mezgoodle/auto-formatter@fdd0fa9a4a0f5bfbf78cc1afae9c52c3e92ffb48
+  uses: mezgoodle/auto-formatter@v1.0.10
+  
+  - name: Auto label
+  # You may pin to the exact commit or the version.
+  # uses: Renato66/auto-label@2fc6ce23006cea59b7b23ce7f4c70e4e233de49f
+  uses: Renato66/auto-label@v2.2.0
+  with:
+    # github token for the repository
+    repo-token: 
+    # 
+    ignore-comments: # optional, default is true
+    # 
+    labels-synonyms: # optional, default is 
+    # 
+    labels-not-allowed: # optional, default is 
+    # 
+    default-labels: # optional, default is 
+    
+    - name: Dependency Review
+  uses: actions/dependency-review-action@v3.0.3
+  with:
+    # Token for the repository. Can be passed in using `{{ secrets.GITHUB_TOKEN }}`.
+    repo-token: # optional, default is ${{ github.token }}
+    # Don't block PRs below this severity. Possible values are `low`, `moderate`, `high`, `critical`.
+    fail-on-severity: # optional, default is low
+    # Dependency scopes to block PRs on. Comma-separated list. Possible values are 'unknown', 'runtime', and 'development' (e.g. "runtime, development")
+    fail-on-scopes: # optional, default is runtime
+    # The base git ref to be used for this check. Has a default value when the workflow event is `pull_request` or `pull_request_target`. Must be provided otherwise.
+    base-ref: # optional
+    # The head git ref to be used for this check. Has a default value when the workflow event is `pull_request` or `pull_request_target`. Must be provided otherwise.
+    head-ref: # optional
+    # A path to the configuration file for the action.
+    config-file: # optional
+    # Comma-separated list of allowed licenses (e.g. "MIT, GPL 3.0, BSD 2 Clause")
+    allow-licenses: # optional
+    # Comma-separated list of forbidden licenses (e.g. "MIT, GPL 3.0, BSD 2 Clause")
+    deny-licenses: # optional
+    # Comma-separated list of allowed GitHub Advisory IDs (e.g. "GHSA-abcd-1234-5679, GHSA-efgh-1234-5679")
+    allow-ghsas: # optional
+    # A token for fetching external configuration file if it lives in another repository. It is required if the repository is private
+    external-repo-token: # optional
+    # A boolean to determine if license checks should be performed
+    license-check: # optional
+    # A boolean to determine if vulnerability checks should be performed
+    vulnerability-check: # optional
+    
+    
+    - name: Veracode Dependency Scanning
+  # You may pin to the exact commit or the version.
+  # uses: veracode/veracode-sca@9ab4d631fc9a0f14e1f9322c0d61bea90e924de1
+  uses: veracode/veracode-sca@v2.0.65
+  with:
+    # Authorization token to query and create issues
+    github_token: # default is ${{ github.token }}
+    # Run the SRCCLR with the `--quick` options
+    quick: # optional, default is false
+    # Show update advisor
+    update_advisor: # optional, default is false
+    # A git URL to work with in case the scan is not for the current repository
+    url: # optional, default is 
+    # An attribute to instruct the action to create an issue from found vulnerability or just simple text output
+    create-issues: # optional, default is false
+    # A path within the repository where the build definition starts
+    path: # optional, default is .
+    # Run the SRCCLR in debug mode
+    debug: # optional, default is false
+    # Run the SRCCLR with the `--skip-collectors` options
+    skip-collectors: # optional, default is false
+    # Run the SRCCLR with the `--allow-dirty` option
+    allow-dirty: # optional, default is false
+    # Run the SRCCLR with the `--recursive` option
+    recursive: # optional, default is false
+    # Run the SRCCLR with the `--skip-vms` option
+    skip-vms: # optional, default is false
+    
+    - name: Dependacop
+  # You may pin to the exact commit or the version.
+  # uses: elestu/actions-dependacop@eb5590f634f00df2151125713708f1296125f8b7
+  uses: elestu/actions-dependacop@v1.0.4
+  
+  - name: dependabump
+  # You may pin to the exact commit or the version.
+  # uses: atlantis-devs/dependabump@def5ab9792d6f399c0a1d7009f9b099bfb4c8452
+  uses: atlantis-devs/dependabump@v1.5.10
+  with:
+    # Full path to the npm binary to use while installing deps
+    npm-bin: # default is npm
+    # API token for a private npm repository
+    private-npm-token: # optional
+    # URL for a private npm repository
+    private-npm-domain: # optional
+    # Scope to limit dependency updates by
+    filter: # optional, default is 
+    # Scope to reject dependency updates by
+    reject: # optional, default is 
+    # Commit message for dependabump commits
+    commit-message: # default is chore(deps): bump all dependencies
+    # Base branch for pull requests
+    base-branch: # default is main
+    # Branch to push dependency updates to
+    dependabump-branch: # default is dependencies
+    # Branch to push major dependency updates to
+    dependabump-major-branch: # default is major-dependencies
+    # github username for commit author
+    commit-author: # default is dependabump
+    # optional path to your npm package.json (if not in repo root)
+    working-dir: # optional
+    
+    
+    - name: Dependadoc
+  # You may pin to the exact commit or the version.
+  # uses: caljess599/dependadoc@622bc6dbc736dfa52fc8021322032b64605a33cd
+  uses: caljess599/dependadoc@v0.1
+  with:
+    # folder to evaluate for changed files
+    mirrored-folder: 
+    # repo to open PR against, e.g., yourorg/your-repo
+    docs-repository: 
+    # relative path to place mirrored folder
+    docs-repository-path: # optional, default is .
+    # name of variable where repo token is stored; default is DOC_REPO_TOKEN
+    docs-repository-token-variable: 
+    
+    
+    - name: Node Dependency
+  # You may pin to the exact commit or the version.
+  # uses: AlexRogalskiy/github-action-node-dependency@055bcf99d5ba9f779d34b0356f65fd5a210e2edb
+  uses: AlexRogalskiy/github-action-node-dependency@v2.0.1
+  with:
+    # Operation mode (package_versions / multi_package_versions)
+    mode: 
+    # Target report file name
+    reportFile: # optional
+    # Target report file path
+    reportPath: # optional
+    
+    - name: dependabot-slack
+  # You may pin to the exact commit or the version.
+  # uses: pwned-17/dependabot-slack@8f2d73300527228f2d5690d900e9db87d70200c1
+  uses: pwned-17/dependabot-slack@v1.6.16
+  with:
+    # GitHub Personal Access Token
+    token: # optional
+    # Microsoft Teams Channel Webhook URL. More info: https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook
+    microsoft_teams_webhook: # optional
+    # Slack Webhook URL. More info: https://api.slack.com/messaging/webhooks
+    slack_webhook: # optional
+    # Pager Duty Integration Key. More info: https://support.pagerduty.com/docs/services-and-integrations
+    pager_duty_integration_key: # optional
+    # Create a Zenduty API Key by visiting Account Settings > API Keys
+    zenduty_api_key: # optional
+    # Zenduty Service ID: https://docs.zenduty.com/docs/services
+    zenduty_service_id: # optional
+    # Zenduty Escalation Policy ID: https://docs.zenduty.com/docs/escalationpolicies
+    zenduty_escalation_policy_id: # optional
+    # Number of vulnerability alerts to send
+    count: # optional, default is 20

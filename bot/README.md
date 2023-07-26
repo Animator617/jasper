@@ -1,7 +1,7 @@
-# The JASPER-Discord-Bot
+# The ATLANTIS.AI-Discord-Bot
 
-## The intension of this part of Jasper
+## The intension of this part of ATLANTIS.AI
 
-This part of Jasper is to comunicate with Discord and the users on it here Jasper will get the posibiity to comunicate with users on discord voice chats.
+This part of ATLANTIS.AI is to comunicate with Discord and the users of our system will get the posibiity to comunicate with users on discord voice chats.
 
 
