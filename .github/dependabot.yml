@@ -3,6 +3,7 @@
   # You may pin to the exact commit or the version.
   # uses: Legal-and-General/dependabot-batcher@c6814575a40b05101672f18318163e5d8be2c4c6
   uses: Legal-and-General/dependabot-batcher@v1.0.3
+  permissions: write-all
   with:
     # A token with 'repo' and 'workflow' privileges
     token: 
