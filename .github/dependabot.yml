@@ -1,234 +1,175 @@
- - name: Dependabot.yaml
+name: Dependabot.yaml
 
-  # You may pin to the exact commit or the version.
-  # uses: Legal-and-General/dependabot-batcher@c6814575a40b05101672f18318163e5d8be2c4c6
-  uses: Legal-and-General/dependabot-batcher@v1.0.3
-  permissions: write-all
-  with:
-    # A token with 'repo' and 'workflow' privileges
-    token: 
-    # The name of your default branch, usually 'main' or 'master'
-    baseBranchName: # Main   
-    # The name to give the branch containing your batched dependencies
-    batchBranchName: # Master
-    # The title to give the PR containing your batched dependencies
-    batchPullTitle: # optional 
-    
-    name: Deploy Jekyll with GitHub Pages dependencies preinstalled
+# You may pin to the exact commit or the version.
+# uses: Legal-and-General/dependabot-batcher@c6814575a40b05101672f18318163e5d8be2c4c6
+uses: Legal-and-General/dependabot-batcher@v1.0.3
+permissions: write-all
+with:
+  # A token with 'repo' and 'workflow' privileges
+  token: ${{ secrets.GITHUB_TOKEN }}
+  # The name of your default branch, usually 'main' or 'master'
+  baseBranchName: "main"
+  # The name to give the branch containing your batched dependencies
+  batchBranchName: "master"
+  # The title to give the PR containing your batched dependencies
+  batchPullTitle: "Optional Title"
+  name: Deploy Jekyll with GitHub Pages dependencies preinstalled
 
-    on:
-      # Runs on pushes targeting the default branch
-      push:
-        branches: ["master"]
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["master"]
 
-      # Allows you to run this workflow manually from the Actions tab
-      workflow_dispatch:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
-    # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-    permissions: "write-all"
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions: "write-all"
 
-    # Allow one concurrent deployment
-    concurrency:
-      group: "pages"
-      cancel-in-progress: true
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
-    jobs:
-      # Build job
-      build:
-        runs-on: ubuntu-latest, windows-latest, macos-latest, andriod-latest, node-latest, github-pages
-        steps:
-          - name: Checkout
-            uses: actions/checkout@v3
-          - name: Setup Pages
-            uses: actions/configure-pages@v3
-          - name: Build with Jekyll
-            uses: actions/jekyll-build-pages@v1
-            with:
-              source: ./
-              destination: ./_site
-          - name: Upload artifact
-            uses: actions/upload-pages-artifact@v1
+jobs:
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+          with:
+            name: site
+            path: ./_site
 
-      # Deployment job
-      deploy:
-        environment:
-          name: github-pages
-          url: ${{ steps.deployment.outputs.page_url }}
-        runs-on: ubuntu-latest
-        needs: build
-        steps:
+  # Deployment job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
-    
-      - name: Setup Node.js environment
-          uses: actions/setup-node@v3.6.0
-          with:
-            # Set always-auth in npmrc.
-            always-auth: # optional, default is false
-            # Version Spec of the version to use. Examples: 12.x, 10.15.1, >=10.15.0.
-            node-version: # optional
-            # File containing the version Spec of the version to use.  Examples: .nvmrc, .node-version, .tool-versions.
-            node-version-file: # optional
-            # Target architecture for Node to use. Examples: x86, x64. Will use system architecture by default.
-            architecture: # optional
-            # Set this option if you want the action to check for the latest available version that satisfies the version spec.
-            check-latest: # optional
-            # Optional registry to set up for auth. Will set the registry in a project level .npmrc and .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN.
-            registry-url: # optional
-            # Optional scope for authenticating against scoped registries. Will fall back to the repository owner when using the GitHub Packages registry (https://npm.pkg.github.com/).
-            scope: # optional
-            # Used to pull node distributions from node-versions. Since there's a default, this is typically not supplied by the user. When running this action on github.com, the default value is sufficient. When running on GHES, you can pass a personal access token for github.com if you are experiencing rate limiting.
-            token: # optional, default is ${{ github.server_url == 'https://github.com' && github.token || '' }}
-            # Used to specify a package manager for caching in the default directory. Supported values: npm, yarn, pnpm.
-            cache: # optional
-            # Used to specify the path to a dependency file: package-lock.json, yarn.lock, etc. Supports wildcards or a list of file names for caching multiple dependencies.
-            cache-dependency-path: # optional
-            
-            - name: Codeball AI Code Review
-  # You may pin to the exact commit or the version.
-  # uses: sturdy-dev/codeball-action@102067b9f537482cee112577655c85fda56d8926
+
+- name: Codeball AI Code Review
   uses: sturdy-dev/codeball-action@v2.6.0
   with:
     # If "true", the action will submit an approving review if the Codeball AI approves the contribution
-    approvePullRequests: # optional, default is true
+    approvePullRequests: true
     # If "true", the action will add `codeball:approved` label to the PR if the Codeball AI confidence is above the configured approve threshold
-    labelPullRequestsWhenApproved: # optional, default is true
+    labelPullRequestsWhenApproved: true
     # If "true", the action will add `codeball:needs-review` label to the PR if the Codeball AI confidence is between the "approve" and "careful" thresholds
-    labelPullRequestsWhenReviewNeeded: # optional, default is false
+    labelPullRequestsWhenReviewNeeded: false
     # If "true", the action will add `codeball:needs-careful-review` label to the PR if the Codeball AI confidence is below the configured careful threshold
-    labelPullRequestsWhenCarefulReviewNeeded: # optional, default is true
+    labelPullRequestsWhenCarefulReviewNeeded: true
     # The threshold to use for "approving" (greater than or equal to). A number between 0 and 1. Must be specified with 3 decimals.
-    approveThreshold: # optional, default is 0.935
+    approveThreshold: 0.935
     # The threshold to use for "careful review" actions (less than). A number between 0 and 1. Must be specified with 3 decimals.
-    carefulReviewThreshold: # optional, default is 0.300
+    carefulReviewThreshold: 0.300
     # If "true", the action will exit with status code 1 if the Codeball AI does not approve the contribution
-    failJobsWhenReviewNeeded: # optional, default is false
+    failJobsWhenReviewNeeded: false
     # If "true", Codeball will read generate code suggestions from comments made in Pull Requests (beta)
-    codeSuggestionsFromComments: # optional, default is false
-    
-    - name: Vertex AI Notebook Review Action
-  # You may pin to the exact commit or the version.
-  # uses: google-github-actions/run-vertexai-notebook@31c2456386e704c0919af2a8dcb3bf6ac149e356
+    codeSuggestionsFromComments: false
+
+- name: Vertex AI Notebook Review Action
   uses: google-github-actions/run-vertexai-notebook@v0.0.1
   with:
     # Google Cloud Storage bucket to store notebooks to be run by Vertex AI. e.g. <project-id>/nbr/source
-    gcs_source_bucket: 
+    gcs_source_bucket: "<your-gcs-source-bucket>"
     # Google Cloud Storage bucket to store the results of the notebooks executed by Vertex AI. e.g. <project-id>/nbr/output
-    gcs_output_bucket: 
-    # Comma separated list of files to run on Vertex AI. e.g. mynotebook.ipynb, somedir/**.pynb. It is expected that this is the output from an action like ```dorny/paths-filter```
-    allowlist: 
+    gcs_output_bucket: "<your-gcs-output-bucket>"
+    # Comma-separated list of files to run on Vertex AI. e.g. mynotebook.ipynb, somedir/**.pynb. It is expected that this is the output from an action like ```dorny/paths-filter```
+    allowlist: "<your-allowlist>"
     # Type of Vertex AI machine to run notebooks on e.g. n1-standard-4
-    vertex_machine_type: # optional, default is n1-standard-4
+    vertex_machine_type: "n1-standard-4"
     # Google Cloud region e.g. us-central1, us-east4
-    region: # optional, default is us-central1
-
+    region: "us-central1"
 
 - name: ai-sdk-action
-  # You may pin to the exact commit or the version.
-  # uses: 0research/ai-sdk@83fd2a65b82cf3d68c878779cea8f3c39f481f71
   uses: 0research/ai-sdk@v1.0
   with:
     # Select Merge strategy (overwrite, version, objectMerge)
-    merge_strategy: 
-    
-    
-  - name: CTO.ai Github Action
-  # You may pin to the exact commit or the version.
-  # uses: cto-ai/action@c297b2327a85d03342eb7d9bef6f48f5632482ee
+    merge_strategy: "overwrite"
+
+- name: CTO.ai Github Action
   uses: cto-ai/action@v1.2
   with:
     # Authorization Token
-    token: 
+    token: "<your-token>"
     # Ops Platform team ID for team sending event.
-    team_id: 
+    team_id: "<your-team-id>"
     # Name of the event i.e. "deployment"
-    event_name: 
+    event_name: "<your-event-name>"
     # Outcome of event. Expecting one of: "succeeded", "failed", "initiated", "recovered"
-    event_action: 
+    event_action: "<your-event-action>"
     # Environment that workflow is running in i.e. "production"
-    environment: # optional
+    environment: "production"
     # Built image ID
-    image: # optional
+    image: "<your-image>"
     # Overwrite branch specified by github in data payload (If not present, action will try to use ref value if available to event type)
-    branch: # optional
+    branch: "<your-branch>"
     # Branch used to reference where change is taking place (If not present, action will try to use ref value if available to event type)
-    commit: # optional
-    
-    
-    - name: Ponicode DogString: Automatic AI-based Docstring generation
-  # You may pin to the exact commit or the version.
-  # uses: ponicode/dogstring-action@03f16e7a06bce61abe70f53b299e4cf5bdfd7c83
+    commit: "<your-commit>"
+
+- name: Ponicode DogString: Automatic AI-based Docstring generation
   uses: ponicode/dogstring-action@v0.1.3-beta
   with:
     # Path of repo to generate docstrings for
-    repo_path: # default is ./
+    repo_path: "./"
     # The Ponicode token
-    auth_token: 
+    auth_token: "<your-token>"
     # Boolean: choose using the action on all the repository or just on the last commit
-    all_repo: 
+    all_repo: true
     # Boolean: enable params and templates in the docstrings
-    enable_template: # optional, default is true
-    
-    - name: Configure GitHub Pages
+    enable_template: true
+
+- name: Configure GitHub Pages
   uses: actions/configure-pages@v3.0.2
   with:
     # Optional static site generator to attempt to configure: "nuxt", "next", "gatsby", or "sveltekit"
-    static_site_generator: # optional
+    static_site_generator: ""
     # Optional file path to static site generator configuration file
-    generator_config_file: # optional
+    generator_config_file: ""
     # GitHub token
-    token: # default is ${{ github.token }}
+    token: ${{ secrets.GITHUB_TOKEN }}
     # Should a Pages site be enabled for the repository if not so already? This will only work with user-to-server tokens.
-    enablement: # optional, default is false
-    
-    - name: GitHub Script
+    enablement: false
+
+- name: GitHub Script
   uses: actions/github-script@v6.4.0
   with:
     # The script to run
-    script: 
+    script: ""
     # The GitHub token used to create an authenticated client
-    github-token: ${{ github.token }}
-    # Whether to tell the GitHub client to log details of its requests
-    debug: # optional
-    # An optional user-agent string
-    user-agent: # optional, default is actions/github-script
-    # A comma-separated list of API previews to accept
-    previews: # optional
-    # Either "string" or "json" (default "json")—how the result will be encoded
-    result-encoding: "json"
-    # The number of times to retry a request
-    retries: 4
-    # A comma separated list of status codes that will NOT be retried e.g. "400,500". No effect unless `retries` is set
-    retry-exempt-status-codes: 400,401,403,404,422
-    
-    - name: Privileged Requester
-  uses: github/privileged-requester@v1.0.0
-  with:
-    # Repository scoped token
-    myToken: # default is ${{ github.token }}
-    # An alternative robot user PAT to be used instead of the built-in Actions token
-    robotUserToken: # optional
-    # Path where the privileged requester configuration can be found
-    path: # default is config/privileged-requester.yaml
-    # The creator of the PR for this pull request event
-    prCreator: # default is ${{ github.event.pull_request.user.login }}
-    # The number of the PR for this pull request event
-    prNumber: # default is ${{ github.event.pull_request.number }}
-    # An option to check that every commit in the PR is made from the privileged requester
-    checkCommits: # default is true
-    # An option to check that the PR diff only has a removal diff, with no additions
-    checkDiff: # default is true
-    # An option to check that the labels on the PR match those defined in the privileged requester config
-    checkLabels: # default is true
-    - name: Configure GitHub Pages
-  uses: actions/configure-pages@v3.0.2
-  with:
-    # Optional static site generator to attempt to configure: "nuxt", "next", "gatsby", or "sveltekit"
-    static_site_generator: # optional
-    # Optional file path to static site generator configuration file
-    generator_config_file: # optional
-    # GitHub token
-    token: # default is ${{ github.token }}
-    # Should a Pages site be enabled for the repository if not so already? This will only work with user-to-server tokens.
-    enablement: # optional, default is false
+    github-token: ${{ secrets.GITHUB_TOKEN }}
+    # Whether to tell the GitHub client to log details of its requests debug: false # An optional user-agent string user-agent: "" # A comma-separated list of API previews to accept previews: "" # Either "string" or "json" (default "json")—how the result will be encoded result-encoding: "json" # The number of times to retry a request retries: 4 # A comma separated list of status codes that will NOT be retried e.g. "400,500". No effect unless retries is set retry-exempt-status-codes: "400,401,403,404,422"
+
+name: Privileged Requester uses: github/privileged-requester@v1.0.0 with:
+Repository scoped token
+myToken: ${{ secrets.GITHUB_TOKEN }}
+An alternative robot user PAT to be used instead of the built-in Actions token
+robotUserToken: ""
+Path where the privileged requester configuration can be found
+path: "config/privileged-requester.yaml"
+The creator of the PR for this pull request event
+prCreator: ""
+The number of the PR for this pull request event
+prNumber: ""
+An option to check that every commit in the PR is made from the privileged requester
+checkCommits: true
+An option to check that the PR diff only has a removal diff, with no additions
+checkDiff: true
+An option to check that the labels on the PR match those defined in the privileged requester config
+checkLabels: true
