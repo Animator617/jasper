@@ -1,5 +1,5 @@
 # Building ATLANTIS - One Install Guides idea
-# Althought the file refernces Jasper.ai, this is modified and intergrated with ATLANTIS.AI and should either only Reference ATLANTIS or Mentiion both.
+# Althought the file refernces Jasper.ai, this will be modified and intergrated with ChatGPT, OpenAI, Jasper AI, Mervin AI, Monica AI, Google's AI, Microsoft's AI, IBM's AI, AWS's AI, and the ATLANTIS.AI and should only Reference ATLANTIS. 
 
 Here are three possible ways to get ATLANTIS.AI up and running. 
 
