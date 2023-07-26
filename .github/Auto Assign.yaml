@@ -1,5 +1,5 @@
 name: Auto Assign and Improve
-permissions: write 
+permissions: write-all
 on:
   issues:
     types: [opened]
